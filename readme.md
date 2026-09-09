@@ -1,0 +1,11 @@
+##Ricapitoliamo cosa ho imparato oggi
+-Setup completo dell'ambiente (JDK, VS Code, estensioni)
+-Struttura base di un'app Spring Boot (@SpringBootApplication, il main)
+-Cos'è una classe, un oggetto, un costruttore, getter/setter
+-Il tuo primo @RestController con @GetMapping
+-@PathVariable per leggere pezzi dinamici dell'URL
+-Una List<Todo> con generics
+-Conversione automatica oggetto Java ↔ JSON
+-CRUD quasi completo: GET, POST, PUT, DELETE (@RequestBody, @PutMapping, @DeleteMapping)
+-Il ciclo for-each e la differenza .equals() vs ==
+-Testare API con Postman

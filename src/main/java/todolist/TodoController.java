@@ -35,7 +35,7 @@ public class TodoController {
         return nuovoTodo;
     }
 
-    @GetMapping("/todos{id}")
+    @GetMapping("/todos/{id}")
     public Todo getUno (@PathVariable Long id) {
         for (Todo t : listaTodo) {
             if (t.getId().equals(id)) {
@@ -45,7 +45,7 @@ public class TodoController {
         return null;
     }
 
-    @PutMapping("/todos{id}")
+    @PutMapping("/todos/{id}")
     public Todo aggiorna(@PathVariable Long id, @RequestBody Todo datiAggiornati) {
         Todo esistente = getUno(id);
         if(esistente != null) {
@@ -54,7 +54,7 @@ public class TodoController {
         return esistente;
     }
 
-    @DeleteMapping("/todos{id}")
+    @DeleteMapping("/todos/{id}")
     public void elimina(@PathVariable Long id) {
       Todo daRimuovere = getUno(id);
       if(daRimuovere != null) {

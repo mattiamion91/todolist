@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@RestController 
+@RestController
 public class TodoController {
 
-    private List <Todo> listaTodo = new ArrayList<>();
+    private List<Todo> listaTodo = new ArrayList<>();
 
     public TodoController() {
         listaTodo.add(new Todo(1L, "Comprare patatine", false));
@@ -21,5 +23,11 @@ public class TodoController {
     public List<Todo> getTutti() {
         return listaTodo;
     }
-      
+
+    @PostMapping("/todos")
+    public Todo creaTodo(@RequestBody Todo nuovoTodo) {
+        listaTodo.add(nuovoTodo);
+        return nuovoTodo;
+    }
+
 }

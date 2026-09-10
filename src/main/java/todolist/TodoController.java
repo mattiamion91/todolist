@@ -1,5 +1,6 @@
 package todolist;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,8 +11,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
+import org.springframework.http.ResponseEntity;
 
 @RestController
 public class TodoController {
@@ -36,30 +36,34 @@ public class TodoController {
     }
 
     @GetMapping("/todos/{id}")
-    public Todo getUno (@PathVariable Long id) {
+    public ResponseEntity<Todo> getUno(@PathVariable Long id) {
         for (Todo t : listaTodo) {
             if (t.getId().equals(id)) {
-                return t;
+                return ResponseEntity.ok(t);
             }
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/todos/{id}")
-    public Todo aggiorna(@PathVariable Long id, @RequestBody Todo datiAggiornati) {
-        Todo esistente = getUno(id);
-        if(esistente != null) {
+    public ResponseEntity<Todo> aggiorna(@PathVariable Long id, @RequestBody Todo datiAggiornati) {
+        ResponseEntity<Todo> risposta = getUno(id);
+        if (risposta.getStatusCode().is2xxSuccessful()) {
+            Todo esistente = risposta.getBody();
             esistente.setCompletato(datiAggiornati.isCompletato());
+            return ResponseEntity.ok(esistente);
         }
-        return esistente;
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/todos/{id}")
-    public void elimina(@PathVariable Long id) {
-      Todo daRimuovere = getUno(id);
-      if(daRimuovere != null) {
-        listaTodo.remove(daRimuovere);
-      }
-    } 
+    public ResponseEntity<Void> elimina(@PathVariable Long id) {
+        ResponseEntity<Todo> risposta = getUno(id);
+        if (risposta.getStatusCode().is2xxSuccessful()) {
+            listaTodo.remove(risposta.getBody());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
